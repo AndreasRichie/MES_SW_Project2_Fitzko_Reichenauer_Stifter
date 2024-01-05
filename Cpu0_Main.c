@@ -53,6 +53,8 @@ int core0_main(void) {
     init_timer((interrupt_fptr_t)read_and_send_values);     // Initialize and start timer
 
     while(1) {
+
+        //scream
     }
 
     return (1);
