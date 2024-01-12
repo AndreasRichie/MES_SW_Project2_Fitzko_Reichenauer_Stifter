@@ -2,8 +2,10 @@
 .ads/
 .settings/
 Configurations/
+Debug/
 
 # Files
 .project
 .cproject
 *.lsl
+*.launch

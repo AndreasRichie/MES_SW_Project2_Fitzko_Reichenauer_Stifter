@@ -27,6 +27,7 @@
 #include "Ifx_Types.h"
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
+#include "hr_and_spo2_handler.h"
 
 extern IfxCpu_syncEvent g_cpuSyncEvent;
 
@@ -43,8 +44,11 @@ int core1_main(void)
     IfxCpu_emitEvent(&g_cpuSyncEvent);
     IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
     
+    oximeter5_return_value_t oximeter_error = prepare_oximeter5_hardware();
+
     while(1)
     {
+        oximeter_error = read_and_save_values();
     }
     return (1);
 }
