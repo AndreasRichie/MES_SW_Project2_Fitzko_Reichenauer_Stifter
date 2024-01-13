@@ -57,9 +57,9 @@ oximeter5_return_value_t read_and_save_values(){
         if(oximeter5_read_sensor_data( &oximeter5, &aun_red_buffer[ n_cnt ], &aun_ir_buffer[ n_cnt ] ) == OXIMETER5_ERROR)
             return OXIMETER5_ERROR;
     }
-    if(oximeter5_get_oxygen_saturation( &aun_ir_buffer[ 0 ], BUFFER_SIZE, &aun_red_buffer[ 0 ], &n_spo2 ) == OXIMETER5_ERROR)
-        return OXIMETER5_ERROR;
     if(oximeter5_get_heart_rate(&aun_ir_buffer[ 0 ], BUFFER_SIZE, &aun_red_buffer[ 0 ], &n_hr) == OXIMETER5_ERROR)
+        return OXIMETER5_ERROR;
+    if(oximeter5_get_oxygen_saturation( &aun_ir_buffer[ 0 ], BUFFER_SIZE, &aun_red_buffer[ 0 ], &n_spo2 ) == OXIMETER5_ERROR)
         return OXIMETER5_ERROR;
     waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 100));
     return OXIMETER5_OK;

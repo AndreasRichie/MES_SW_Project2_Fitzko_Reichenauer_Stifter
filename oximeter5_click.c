@@ -213,7 +213,7 @@ oximeter5_return_value_t oximeter5_generic_write ( oximeter5_t *ctx, uint8 reg, 
     // Write TX buffer to device as soon as it is ready
     IfxI2c_I2c_Status i2c_status = IfxI2c_I2c_Status_nak;
     while(i2c_status == IfxI2c_I2c_Status_nak)
-        i2c_status = IfxI2c_I2c_write(&ctx->i2cDev, data_buf, tx_len);
+        i2c_status = IfxI2c_I2c_write(&ctx->i2cDev, data_buf, tx_len+1);
 
     return (i2c_status == IfxI2c_I2c_Status_ok) ? OXIMETER5_OK : OXIMETER5_ERROR;
 }
@@ -221,7 +221,7 @@ oximeter5_return_value_t oximeter5_generic_write ( oximeter5_t *ctx, uint8 reg, 
 oximeter5_return_value_t oximeter5_generic_read ( oximeter5_t *ctx, uint8 reg, uint8 *rx_buf, uint8 rx_len )
 {
     // send register to read from
-    if (oximeter5_generic_write(ctx, reg, NULL_PTR, 1) == OXIMETER5_ERROR)
+    if (oximeter5_generic_write(ctx, reg, NULL_PTR, 0) == OXIMETER5_ERROR)
         return OXIMETER5_ERROR;
 
     // Wait after register was sent before read is started
