@@ -44,6 +44,7 @@ uint8 ascRxBuffer[ASC_RX_BUFFER_SIZE + sizeof(Ifx_Fifo) + 8];       // Declarati
 
 static char serial_string[SIZE_DEVICE_ID_STRING] = {0};             // Buffer for serial id string
 static char value_string[SIZE_VALUES_STRING] = {0};                 // Buffer for values string
+static char timestamp_buf[SIZE_VALUES_STRING] = {0};                 // Buffer for values string
 
 /*********************************************************************************************************************/
 /*---------------------------------------------Function Implementations----------------------------------------------*/
@@ -82,6 +83,7 @@ void initUART() {
         ascConfig.interrupt.erPriority = INTPRIO_ASCLIN3_ER;
         ascConfig.interrupt.typeOfService = IfxCpu_Irq_getTos(IfxCpu_getCoreIndex());
         //ascConfig.interrupt.typeOfService = (IfxSrc_Tos)IfxCpu_getCoreId();
+
 
         /* FIFO configuration */
         ascConfig.txBuffer = &ascTxBuffer;
@@ -123,11 +125,19 @@ void send_serial_id(const uint32 serial_id){
 }
 
 
-void send_values(const float temperature, const float humidity){
-    // Convert float values into string with 2 decimal precision
-    snprintf(value_string, sizeof(value_string), "Temperature: %.2fdegC, Humidity: %.2f%%\n", temperature, humidity);
+void send_values(const uint8 hr, const uint8 spo2){
+
+
+    snprintf(value_string, sizeof(value_string), "%dBPM, %d%%SpO2,\n", hr, spo2);
     // Send converted string via UART
     uart_sendMessage((uint8*)value_string, strlen(value_string));
 }
+
+void send_timestamp (const uint8 secs, const uint8 mins, const uint8 hours){
+
+    snprintf(timestamp_buf, sizeof(timestamp_buf), "[%02dh:%02dm:%02ds] ", hours, mins, secs);
+    uart_sendMessage((uint8*)timestamp_buf, strlen(timestamp_buf));
+}
+
 
 

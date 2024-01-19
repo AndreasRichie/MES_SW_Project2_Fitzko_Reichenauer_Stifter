@@ -27,8 +27,23 @@
 #include "Ifx_Types.h"
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
+#include "STM_Interrupt.h"
+#include <Bsp.h>                      //Board support functions (for the waitTime function)
+
+
+
 
 extern IfxCpu_syncEvent g_cpuSyncEvent;
+
+
+
+
+void generateTestData(void){
+    uint8 testdata = 77;
+    //testdata = rand();
+    testdata = 77;
+
+}
 
 int core1_main(void)
 {
@@ -43,8 +58,14 @@ int core1_main(void)
     IfxCpu_emitEvent(&g_cpuSyncEvent);
     IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
     
+    srand(time(NULL));
+
     while(1)
     {
+        generateTestData();
+        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 500));
+
+
     }
     return (1);
 }

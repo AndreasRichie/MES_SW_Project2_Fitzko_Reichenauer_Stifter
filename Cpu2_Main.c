@@ -27,6 +27,13 @@
 #include "Ifx_Types.h"
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
+#include "STM_Interrupt.h"
+
+//#include <Asclin/Asc/IfxAsclin_Asc.h> //Needed for UART
+#include <UART.h>
+#include <Bsp.h>                      //Board support functions (for the waitTime function)
+
+
 
 extern IfxCpu_syncEvent g_cpuSyncEvent;
 
@@ -43,8 +50,17 @@ int core2_main(void)
     IfxCpu_emitEvent(&g_cpuSyncEvent);
     IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
     
+
+    //waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 1000));
+
+
+
+    initCommTimer();
+
     while(1)
     {
+
+
     }
     return (1);
 }

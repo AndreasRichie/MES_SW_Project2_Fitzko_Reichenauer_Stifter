@@ -11,9 +11,11 @@
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
 #include <Asclin/Asc/IfxAsclin_Asc.h> //Needed for UART
-#include <timer.h>
 #include <UART.h>
+
+#include <timer.h>
 #include <i2c_sensor.h>
+
 
 IfxCpu_syncEvent g_cpuSyncEvent = 0;
 
@@ -45,12 +47,17 @@ int core0_main(void) {
     /* Wait for CPU sync event */
     IfxCpu_emitEvent(&g_cpuSyncEvent);
     IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
-    
-    initUART();                                             // Initialize UART
-    init_i2c();                                             // Initialize I2C
-    do_soft_reset();                                        // Perform soft reset of sensor
-    read_and_print_serial_id();                             // Read and send serial id of sensor
-    init_timer((interrupt_fptr_t)read_and_send_values);     // Initialize and start timer
+
+    initUART();                                             // Initialize UART ! need to set interrupts in uart.c to 2 as well!
+
+//    init_i2c();                                             // Initialize I2C
+//    do_soft_reset();                                        // Perform soft reset of sensor
+//    read_and_print_serial_id();                             // Read and send serial id of sensor
+//    init_timer((interrupt_fptr_t)read_and_send_values);     // Initialize and start timer
+
+
+
+
 
     while(1) {
 

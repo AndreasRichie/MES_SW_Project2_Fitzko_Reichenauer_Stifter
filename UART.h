@@ -53,12 +53,23 @@ void uart_sendMessage(uint8 *data, Ifx_SizeT size);
 void send_serial_id(const uint32 serial_id);
 
 /***
- * @brief: a function that sends the two float values read from the sensor
+ * @brief: a function that sends the two values read from the sensor
  * via UART to the receiver
- * @params: float, the temperature value to be transfered
- * @params: float, the humidity value to be transfered
+ * @params: uint8, the heart rate value to be transfered
+ * @params: uint8, the blood oxygen saturation value to be transfered
  * @return: void
  */
-void send_values(const float temperature, const float humidity);
+void send_values(const uint8 hr, const uint8 spo2);
+
+/***
+ * @brief: a function that sends a timestamp
+ * via UART to the receiver
+ * @params: uint8, the amount of seconds passed to be transfered
+ * @params: uint8, the amount of minutes passed to be transfered
+ * @params: uint8, the amount of hours passed to be transfered
+ * @return: void
+ */
+
+void send_timestamp (const uint8 secs, const uint8 mins, const uint8 hours);
 
 #endif /* UART_H_ */
