@@ -96,13 +96,13 @@ static void dev_find_peaks ( sint32 *pn_locs, sint32 *n_npks,  sint32  *pn_x, ui
  * @brief Delay execution for 10ms function.
  * @details This function delays the execution of the program for 10ms.
  */
-static void Delay_10ms (  );
+static void Delay_10ms ( void );
 
 /**
  * @brief Delay execution for 1s function.
  * @details This function delays the execution of the program for 1s.
  */
-static void Delay_1sec (  );
+static void Delay_1sec ( void );
 
 void oximeter5_init ( oximeter5_t *ctx )
 {
@@ -495,7 +495,7 @@ oximeter5_return_value_t oximeter5_get_oxygen_saturation ( uint32 *pun_ir_buffer
     if ( ( n_ratio_average > 2 ) && ( n_ratio_average < 184 ) )
     {
         n_spo2_calc = uch_spo2_table[ n_ratio_average ];
-        *pn_spo2 = n_spo2_calc;
+        *pn_spo2 = (uint8)n_spo2_calc;
         error_flag = OXIMETER5_OK;
     }
     else
@@ -694,11 +694,11 @@ static void dev_find_peaks ( sint32 *pn_locs, sint32 *n_npks,  sint32  *pn_x, ui
     }
 }
 
-static void Delay_10ms (  ){
+static void Delay_10ms ( void ){
     waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 10));
 }
 
-static void Delay_1sec (  ){
+static void Delay_1sec ( void ){
     waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 1000));
 }
 

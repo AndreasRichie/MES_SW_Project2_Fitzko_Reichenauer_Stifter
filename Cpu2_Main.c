@@ -27,11 +27,17 @@
 #include "Ifx_Types.h"
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
+#include "hr_and_spo2_handler.h"
+
+#include <Bsp.h>                      //Board support functions (for the waitTime function)
 
 extern IfxCpu_syncEvent g_cpuSyncEvent;
 
 int core2_main(void)
 {
+    uint8 spo2_value;
+    sint32 heart_rate_value;
+
     IfxCpu_enableInterrupts();
     
     /* !!WATCHDOG2 IS DISABLED HERE!!
@@ -45,6 +51,16 @@ int core2_main(void)
     
     while(1)
     {
+        // test get values
+        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 1000));
+
+        interface_return_value_t oximeter_error = get_values(&spo2_value, &heart_rate_value);
+
+        // just to have all values available in debugger
+        if(oximeter_error == SUCCESS){
+            uint8 test_spo2 = spo2_value;
+            sint32 test_hr = heart_rate_value;
+        }
     }
     return (1);
 }

@@ -29,10 +29,16 @@
 #include "IfxScuWdt.h"
 #include "hr_and_spo2_handler.h"
 
+#include <Bsp.h>                      //Board support functions (for the waitTime function)
+
 extern IfxCpu_syncEvent g_cpuSyncEvent;
 
 int core1_main(void)
 {
+    oximeter5_t oximeter5;
+    uint32 ir_buffer[BUFFER_SIZE];
+    uint32 red_buffer[BUFFER_SIZE];
+
     IfxCpu_enableInterrupts();
     
     /* !!WATCHDOG1 IS DISABLED HERE!!
@@ -44,11 +50,17 @@ int core1_main(void)
     IfxCpu_emitEvent(&g_cpuSyncEvent);
     IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
     
-    oximeter5_return_value_t oximeter_error = prepare_oximeter5_hardware();
+    interface_return_value_t oximeter_error = prepare_oximeter5_hardware(&oximeter5, ir_buffer, red_buffer);
 
+    // todo handle timing of read
+    // todo handle error and restart after time
+    // todo maybe low pass filter?
     while(1)
     {
-        oximeter_error = read_and_save_values();
+        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 100));
+
+        oximeter_error = read_and_calculate_values(&oximeter5, ir_buffer, red_buffer);
+
     }
     return (1);
 }

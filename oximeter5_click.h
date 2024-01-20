@@ -193,9 +193,27 @@
 
 /*! @} */ // oximeter5_set
 
-// todo doc
+/**
+ * @defgroup oximeter5_read_set Oximeter 5 Read Settings
+ * @brief Settings for reading from Oximeter 5 Click.
+ */
+
+/**
+ * @addtogroup oximeter5_read_set
+ * @{
+ */
+
+/**
+ * @brief Oximeter 5 settings for reading from sensor.
+ * @details Specified settings for reading from Oximeter 5.
+ */
+
+// number of samples to retrieve in every read operation
 #define SAMPLING_FREQUENCY          25
+// max number of samples saved in buffer
 #define BUFFER_SIZE                 ( SAMPLING_FREQUENCY * 4 )
+
+/*! @} */ // oximeter5_read_set
 
 /**
  * @brief Oximeter 5 Click context object.
