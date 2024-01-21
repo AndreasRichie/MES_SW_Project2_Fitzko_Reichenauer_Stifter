@@ -55,7 +55,7 @@ int core0_main(void) {
     c8x8r_init();                                           // Initialize the display
 
     while(1) {
-        if(counter > 15)
+        if(counter > 5)
         {
             get_globals(&data);
             timings = c8x8r_getHeartFrequenz(data.bpm);

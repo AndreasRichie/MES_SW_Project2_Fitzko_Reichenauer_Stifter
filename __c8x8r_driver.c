@@ -12,6 +12,7 @@
 #include "__c8x8r_driver.h"
 #include <stdio.h>
 #include <string.h>
+#include "hr_and_spo2_handler.h"
 /*************************************************************************************************************/
 /*-------------------------------------------------Global variables------------------------------------------*/
 /*************************************************************************************************************/
@@ -204,6 +205,8 @@ void get_globals(struct display_data *data){
     sint32 bpm = 100;
     uint8 spo2 = 100;
     // Hier werde ich irgendwo die Global variablen abfrage
+
+    interface_return_value_t oximeter_error = get_values(&spo2, &bpm);
 
     if(bpm < 35|| bpm > 150){
         data->bpm = 0;
