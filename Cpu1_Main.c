@@ -35,7 +35,9 @@ extern IfxCpu_syncEvent g_cpuSyncEvent;
 
 int core1_main(void)
 {
+    // oximeter 5 click context object
     oximeter5_t oximeter5;
+    // buffers for IR and red brightness values
     uint32 ir_buffer[BUFFER_SIZE];
     uint32 red_buffer[BUFFER_SIZE];
 
@@ -49,12 +51,13 @@ int core1_main(void)
     /* Wait for CPU sync event */
     IfxCpu_emitEvent(&g_cpuSyncEvent);
     IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
-    
+
     interface_return_value_t oximeter_error = prepare_oximeter5_hardware(&oximeter5, ir_buffer, red_buffer);
 
     // todo handle timing of read
     // todo handle error and restart after time
-    // todo maybe low pass filter?
+    // todo better accuracy --> maybe low pass filter?
+    // todo maybe error string for UART
     while(1)
     {
         waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 100));

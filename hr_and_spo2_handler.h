@@ -15,6 +15,10 @@
 
 #include "oximeter5_click.h"
 
+// value which is treated as invalid result
+#define INVALID_SPO2    0
+#define INVALID_HR      0
+
 /**
  * @brief Hardware Interface return value data.
  * @details Predefined enum values for hardware interface return values.
