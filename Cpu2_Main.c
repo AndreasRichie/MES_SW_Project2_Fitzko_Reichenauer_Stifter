@@ -30,13 +30,19 @@
 #include "hr_and_spo2_handler.h"
 
 #include <Bsp.h>                      //Board support functions (for the waitTime function)
+#include "STM_Interrupt.h"
+#include <UART.h>
+#include <Bsp.h>                      //Board support functions (for the waitTime function)
+
+
 
 extern IfxCpu_syncEvent g_cpuSyncEvent;
 
 int core2_main(void)
 {
-    uint8 spo2_value;
-    sint32 heart_rate_value;
+
+    uint8 spo2_value = 98;
+    sint32 heart_rate_value = 69;
 
     IfxCpu_enableInterrupts();
     
@@ -49,18 +55,30 @@ int core2_main(void)
     IfxCpu_emitEvent(&g_cpuSyncEvent);
     IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
     
+
+    //waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 1000));
+
+
+
+    initCommTimer();
+
     while(1)
     {
+
         // test get values
-        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 1000));
+        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 500));
 
-        interface_return_value_t oximeter_error = get_values(&spo2_value, &heart_rate_value);
+        //interface_return_value_t oximeter_error = get_values(&spo2_value, &heart_rate_value);
 
-        // just to have all values available in debugger
-        if(oximeter_error == SUCCESS){
-            uint8 test_spo2 = spo2_value;
-            sint32 test_hr = heart_rate_value;
-        }
+//        // just to have all values available in debugger
+//        if(oximeter_error == SUCCESS){
+//            uint8 test_spo2 = spo2_value;
+//            sint32 test_hr = heart_rate_value;
+//        }
+
+        set_data(heart_rate_value, spo2_value);
+
+
     }
     return (1);
 }
