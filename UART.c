@@ -49,9 +49,9 @@ static char timestamp_buf[SIZE_VALUES_STRING] = {0};                 // Buffer f
 /*********************************************************************************************************************/
 /*---------------------------------------------Function Implementations----------------------------------------------*/
 /*********************************************************************************************************************/
-IFX_INTERRUPT(asclin3_Tx_ISR, 0, INTPRIO_ASCLIN3_TX);               // Adding the Interrupt Service Routine
-IFX_INTERRUPT(asclin3_Rx_ISR, 0, INTPRIO_ASCLIN3_RX);               // Adding the Interrupt Service Routine
-IFX_INTERRUPT(asclin3_Er_ISR, 0, INTPRIO_ASCLIN3_ER);               // Adding the Interrupt Service Routine
+IFX_INTERRUPT(asclin3_Tx_ISR, 2, INTPRIO_ASCLIN3_TX);               // Adding the Interrupt Service Routine
+IFX_INTERRUPT(asclin3_Rx_ISR, 2, INTPRIO_ASCLIN3_RX);               // Adding the Interrupt Service Routine
+IFX_INTERRUPT(asclin3_Er_ISR, 2, INTPRIO_ASCLIN3_ER);               // Adding the Interrupt Service Routine
 
 
 void asclin3_Tx_ISR(void) {

@@ -36,6 +36,7 @@
 #include <UART.h>
 #include "Ifx_Types.h"
 #include <string.h>
+#include "hr_and_spo2_handler.h"
 
 /*********************************************************************************************************************/
 /*------------------------------------------------------Macros-------------------------------------------------------*/
@@ -81,10 +82,25 @@ IFX_INTERRUPT(isrSTM, 0, ISR_PRIORITY_STM);
 
 void isrSTM(void)
 {
+
+    uint8 spo2_value = 0;
+    sint32 heart_rate_value = 0;
+
     /* Update the compare register value that will trigger the next interrupt and toggle the LED */
     IfxStm_increaseCompare(STM, g_STMConf.comparator, g_ticksFor1s);
 
-    timer_flag = TRUE;
+    interface_return_value_t oximeter_error = get_values(&spo2_value, &heart_rate_value);
+
+
+    if(oximeter_error == SUCCESS){
+        // just to have all values available in debugger
+        uint8 test_spo2 = spo2_value;
+        sint32 test_hr = heart_rate_value;
+
+        generate_timestamp();
+        send_values(heart_rate_value, spo2_value);
+    }
+
 
 
 
@@ -97,7 +113,7 @@ void initSTM(void)
 
     g_STMConf.triggerPriority = ISR_PRIORITY_STM;   /* Set the priority of the interrupt                            */
     g_STMConf.typeOfService = IfxSrc_Tos_cpu0;      /* Set the service provider for the interrupts                  */
-    g_STMConf.ticks = g_ticksFor1s;              /* Set the number of ticks after which the timer triggers an
+    g_STMConf.ticks = g_ticksFor1s;                 /* Set the number of ticks after which the timer triggers an
                                                      * interrupt for the first time                                 */
     IfxStm_initCompare(STM, &g_STMConf);            /* Initialize the STM with the user configuration               */
 }
@@ -131,26 +147,6 @@ static void generate_timestamp(void){
 
 }
 
-void set_data(uint8 hr, sint32 spo2){
-
-
-    /*
-     * get data from CPU1
-     * Check if successful - if yes put data in variable
-     * generate timestamp
-     * send data + stamp via uart
-     * ???
-     * profit
-    */
-
-    //wait for interrupt
-    //maybe be a bit more creative
-    while (!timer_flag);
-    timer_flag = FALSE;
-    generate_timestamp();
-    //replace values with real values
-    send_values(hr, spo2);
-}
 
 
 
