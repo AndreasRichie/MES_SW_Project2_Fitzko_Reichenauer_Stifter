@@ -14,12 +14,17 @@ RM := rm -rf
 -include Libraries/iLLD/TC27D/Tricore/Stm/Std/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/Src/Std/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/Scu/Std/subdir.mk
+-include Libraries/iLLD/TC27D/Tricore/Qspi/Std/subdir.mk
+-include Libraries/iLLD/TC27D/Tricore/Qspi/SpiMaster/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/Port/Std/subdir.mk
+-include Libraries/iLLD/TC27D/Tricore/Port/Io/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/Mtu/Std/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/I2c/Std/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/I2c/I2c/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/Gtm/Tom/Timer/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/Gtm/Std/subdir.mk
+-include Libraries/iLLD/TC27D/Tricore/Dma/Std/subdir.mk
+-include Libraries/iLLD/TC27D/Tricore/Dma/Dma/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/Cpu/Trap/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/Cpu/Std/subdir.mk
 -include Libraries/iLLD/TC27D/Tricore/Cpu/Irq/subdir.mk
@@ -28,6 +33,7 @@ RM := rm -rf
 -include Libraries/iLLD/TC27D/Tricore/Asclin/Asc/subdir.mk
 -include Libraries/Service/CpuGeneric/SysSe/Bsp/subdir.mk
 -include Libraries/Service/CpuGeneric/StdIf/subdir.mk
+-include Libraries/Service/CpuGeneric/If/subdir.mk
 -include Libraries/Infra/Platform/Tricore/Compilers/subdir.mk
 -include Configurations/Debug/subdir.mk
 -include subdir.mk

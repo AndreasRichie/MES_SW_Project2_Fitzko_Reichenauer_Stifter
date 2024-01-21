@@ -8,10 +8,8 @@
 #include <IfxPort_PinMap.h>
 #include "IfxQspi_SpiMaster.h"
 #include <Bsp.h>
-#include <Asclin/Asc/IfxAsclin_Asc.h> //Needed for UART
-#include <UART.h>
 #include <stdio.h>
-#include <__c8x8r_driver.h>
+#include "__c8x8r_driver.h"
 #include <stdio.h>
 #include <string.h>
 /*************************************************************************************************************/

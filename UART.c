@@ -42,7 +42,6 @@ IfxAsclin_Asc asc;                                                  // Declarati
 uint8 ascTxBuffer[ASC_TX_BUFFER_SIZE + sizeof(Ifx_Fifo) + 8];       // Declaration of the FIFOs parameters
 uint8 ascRxBuffer[ASC_RX_BUFFER_SIZE + sizeof(Ifx_Fifo) + 8];       // Declaration of the FIFOs parameters
 
-static char serial_string[SIZE_DEVICE_ID_STRING] = {0};             // Buffer for serial id string
 static char value_string[SIZE_VALUES_STRING] = {0};                 // Buffer for values string
 static char timestamp_buf[SIZE_VALUES_STRING] = {0};                 // Buffer for values string
 
@@ -114,14 +113,6 @@ void uart_blockingWrite(uint8 byte) {
 
 void uart_sendMessage(uint8 *data, Ifx_SizeT size) {
     IfxAsclin_Asc_write(&asc, data, &size, TIME_INFINITE);
-}
-
-
-void send_serial_id(const uint32 serial_id){
-    // Convert 32 bit value into string in hex format
-    snprintf(serial_string, sizeof(serial_string), "Device-ID: 0x%x\n",serial_id);
-    // Send converted string via UART
-    uart_sendMessage((uint8*)serial_string, strlen(serial_string));
 }
 
 

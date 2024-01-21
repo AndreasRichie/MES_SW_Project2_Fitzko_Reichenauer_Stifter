@@ -61,7 +61,6 @@ int core1_main(void)
     while(1)
     {
         waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 100));
-
         oximeter_error = read_and_calculate_values(&oximeter5, ir_buffer, red_buffer);
 
     }

@@ -10,9 +10,7 @@
 #include "Ifx_Types.h"
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
-#include <UART.h>
-#include <i2c_sensor.h>
-#include <__c8x8r_driver.h>
+#include "__c8x8r_driver.h"
 #include <Bsp.h>
 
 IfxCpu_syncEvent g_cpuSyncEvent = 0;
@@ -38,11 +36,6 @@ int core0_main(void) {
     IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
     
 
-    initUART();                                             // Initialize UART
-    init_i2c();                                             // Initialize I2C
-    do_soft_reset();                                        // Perform soft reset of sensor
-    read_and_print_serial_id();                             // Read and send serial id of sensor
-    init_timer((interrupt_fptr_t)read_and_send_values);     // Initialize and start timer
     c8x8r_init();                                           // Initialize the display
 
     while(1) {

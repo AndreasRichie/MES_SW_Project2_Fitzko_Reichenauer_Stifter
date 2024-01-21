@@ -27,6 +27,7 @@ SUBDIRS := \
 Configurations/Debug \
 . \
 Libraries/Infra/Platform/Tricore/Compilers \
+Libraries/Service/CpuGeneric/If \
 Libraries/Service/CpuGeneric/StdIf \
 Libraries/Service/CpuGeneric/SysSe/Bsp \
 Libraries/iLLD/TC27D/Tricore/Asclin/Asc \
@@ -35,12 +36,17 @@ Libraries/iLLD/TC27D/Tricore/Cpu/CStart \
 Libraries/iLLD/TC27D/Tricore/Cpu/Irq \
 Libraries/iLLD/TC27D/Tricore/Cpu/Std \
 Libraries/iLLD/TC27D/Tricore/Cpu/Trap \
+Libraries/iLLD/TC27D/Tricore/Dma/Dma \
+Libraries/iLLD/TC27D/Tricore/Dma/Std \
 Libraries/iLLD/TC27D/Tricore/Gtm/Std \
 Libraries/iLLD/TC27D/Tricore/Gtm/Tom/Timer \
 Libraries/iLLD/TC27D/Tricore/I2c/I2c \
 Libraries/iLLD/TC27D/Tricore/I2c/Std \
 Libraries/iLLD/TC27D/Tricore/Mtu/Std \
+Libraries/iLLD/TC27D/Tricore/Port/Io \
 Libraries/iLLD/TC27D/Tricore/Port/Std \
+Libraries/iLLD/TC27D/Tricore/Qspi/SpiMaster \
+Libraries/iLLD/TC27D/Tricore/Qspi/Std \
 Libraries/iLLD/TC27D/Tricore/Scu/Std \
 Libraries/iLLD/TC27D/Tricore/Src/Std \
 Libraries/iLLD/TC27D/Tricore/Stm/Std \

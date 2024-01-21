@@ -9,6 +9,7 @@ C_SRCS += \
 ../Cpu2_Main.c \
 ../STM_Interrupt.c \
 ../UART.c \
+../__c8x8r_driver.c \
 ../hr_and_spo2_handler.c \
 ../oximeter5_click.c \
 ../timer.c 
@@ -19,6 +20,7 @@ OBJS += \
 ./Cpu2_Main.o \
 ./STM_Interrupt.o \
 ./UART.o \
+./__c8x8r_driver.o \
 ./hr_and_spo2_handler.o \
 ./oximeter5_click.o \
 ./timer.o 
@@ -29,6 +31,7 @@ COMPILED_SRCS += \
 ./Cpu2_Main.src \
 ./STM_Interrupt.src \
 ./UART.src \
+./__c8x8r_driver.src \
 ./hr_and_spo2_handler.src \
 ./oximeter5_click.src \
 ./timer.src 
@@ -39,6 +42,7 @@ C_DEPS += \
 ./Cpu2_Main.d \
 ./STM_Interrupt.d \
 ./UART.d \
+./__c8x8r_driver.d \
 ./hr_and_spo2_handler.d \
 ./oximeter5_click.d \
 ./timer.d 
