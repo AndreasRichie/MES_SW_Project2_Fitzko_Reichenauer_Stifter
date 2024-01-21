@@ -13,6 +13,22 @@
 #include "__c8x8r_driver.h"
 #include <Bsp.h>
 
+IFX_INTERRUPT(qspi0TxISR, 0, IFX_INTPRIO_QSPI0_TX)
+{
+    IfxQspi_SpiMaster_isrTransmit(&spi);
+}
+
+
+IFX_INTERRUPT(qspi0RxISR, 0, IFX_INTPRIO_QSPI0_RX)
+{
+   IfxQspi_SpiMaster_isrReceive(&spi);
+}
+
+IFX_INTERRUPT(qspi0ErISR, 0, IFX_INTPRIO_QSPI0_ER)
+{
+   IfxQspi_SpiMaster_isrError(&spi);
+}
+
 IfxCpu_syncEvent g_cpuSyncEvent = 0;
 
 int core0_main(void) {
