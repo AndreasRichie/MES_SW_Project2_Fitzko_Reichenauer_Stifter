@@ -84,19 +84,7 @@ void isrSTM(void)
     /* Update the compare register value that will trigger the next interrupt and toggle the LED */
     IfxStm_increaseCompare(STM, g_STMConf.comparator, g_ticksFor1s);
 
-    /*
-     * get data from CPU1
-     * Check if successful - if yes put data in variable
-     * generate timestamp
-     * send data + stamp via uart
-     * ???
-     * profit
-    */
-
-    generate_timestamp();
-
-    //replace values with real values
-    send_values(69, 98);
+    timer_flag = TRUE;
 
 
 
@@ -143,32 +131,26 @@ static void generate_timestamp(void){
 
 }
 
+void set_data(uint8 hr, sint32 spo2){
 
-//IFX_EXTERN boolean IfxCpu_acquireMutex(IfxCpu_mutexLock *lock);
 
-/** \brief API to unlock the mutex .
- *
- * This API can be used to unlock the previously acquired mutex
- * \param lock lock pointer
- * \return None
- *
- * \code
- *    IfxCpu_mutexLock resourceLock;
- *    boolean flag = IfxCpu_acquireMutex(&resourceLock);
- *    if (flag){
- *      // critical section
- *
- *
- *
- *      //CODE HERE
- *
- *
- *
- *      IfxCpu_releaseMutex(&resourceLock);
- *    }
- * \endcode
- *
- */
+    /*
+     * get data from CPU1
+     * Check if successful - if yes put data in variable
+     * generate timestamp
+     * send data + stamp via uart
+     * ???
+     * profit
+    */
+
+    //wait for interrupt
+    //maybe be a bit more creative
+    while (!timer_flag);
+    timer_flag = FALSE;
+    generate_timestamp();
+    //replace values with real values
+    send_values(hr, spo2);
+}
 
 
 

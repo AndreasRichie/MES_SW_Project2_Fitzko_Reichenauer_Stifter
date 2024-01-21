@@ -59,7 +59,7 @@ void send_serial_id(const uint32 serial_id);
  * @params: uint8, the blood oxygen saturation value to be transfered
  * @return: void
  */
-void send_values(const uint8 hr, const uint8 spo2);
+void send_values(const uint8 hr, const sint32 spo2);
 
 /***
  * @brief: a function that sends a timestamp

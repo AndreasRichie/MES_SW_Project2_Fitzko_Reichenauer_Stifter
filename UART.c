@@ -125,7 +125,7 @@ void send_serial_id(const uint32 serial_id){
 }
 
 
-void send_values(const uint8 hr, const uint8 spo2){
+void send_values(const uint8 hr, const sint32 spo2){
 
 
     snprintf(value_string, sizeof(value_string), "%dBPM, %d%%SpO2,\n", hr, spo2);

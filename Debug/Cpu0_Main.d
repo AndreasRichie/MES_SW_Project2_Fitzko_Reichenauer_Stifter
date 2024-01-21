@@ -112,5 +112,3 @@ c:/Users/loltr/OneDrive/Documents/FH Technikum Wien/Embedded Systems/MES I/Softw
 c:/Users/loltr/OneDrive/Documents/FH Technikum Wien/Embedded Systems/MES I/Software/ES_SW_Projekt/MES_SW_Project2_Fitzko_Reichenauer_Stifter/UART.h :
 c:/Users/loltr/OneDrive/Documents/FH Technikum Wien/Embedded Systems/MES I/Software/ES_SW_Projekt/MES_SW_Project2_Fitzko_Reichenauer_Stifter/Debug/Cpu0_Main.o :	c:/Users/loltr/OneDrive/Documents/FH Technikum Wien/Embedded Systems/MES I/Software/ES_SW_Projekt/MES_SW_Project2_Fitzko_Reichenauer_Stifter/timer.h
 c:/Users/loltr/OneDrive/Documents/FH Technikum Wien/Embedded Systems/MES I/Software/ES_SW_Projekt/MES_SW_Project2_Fitzko_Reichenauer_Stifter/timer.h :
-c:/Users/loltr/OneDrive/Documents/FH Technikum Wien/Embedded Systems/MES I/Software/ES_SW_Projekt/MES_SW_Project2_Fitzko_Reichenauer_Stifter/Debug/Cpu0_Main.o :	c:/Users/loltr/OneDrive/Documents/FH Technikum Wien/Embedded Systems/MES I/Software/ES_SW_Projekt/MES_SW_Project2_Fitzko_Reichenauer_Stifter/i2c_sensor.h
-c:/Users/loltr/OneDrive/Documents/FH Technikum Wien/Embedded Systems/MES I/Software/ES_SW_Projekt/MES_SW_Project2_Fitzko_Reichenauer_Stifter/i2c_sensor.h :

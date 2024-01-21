@@ -28,6 +28,7 @@
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
 #include "STM_Interrupt.h"
+#include "hr_and_spo2_handler.h"
 
 //#include <Asclin/Asc/IfxAsclin_Asc.h> //Needed for UART
 #include <UART.h>
@@ -39,6 +40,10 @@ extern IfxCpu_syncEvent g_cpuSyncEvent;
 
 int core2_main(void)
 {
+
+    uint8 spo2_value = 98;
+    sint32 heart_rate_value = 69;
+
     IfxCpu_enableInterrupts();
     
     /* !!WATCHDOG2 IS DISABLED HERE!!
@@ -59,6 +64,19 @@ int core2_main(void)
 
     while(1)
     {
+
+        // test get values
+        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 500));
+
+        //interface_return_value_t oximeter_error = get_values(&spo2_value, &heart_rate_value);
+
+//        // just to have all values available in debugger
+//        if(oximeter_error == SUCCESS){
+//            uint8 test_spo2 = spo2_value;
+//            sint32 test_hr = heart_rate_value;
+//        }
+
+        set_data(heart_rate_value, spo2_value);
 
 
     }
