@@ -21,4 +21,18 @@ This core handles UART communication
 
 ## All functions
 
+### Display values
+
+How much or how little the heart is filled informes the user about the approximate SpO2 value.
+A not filled heart means a value below XXXXXX % and looks like this:
+
+<img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/879bb90f-7c17-49a4-8eb6-ed8257706553" width="48">
+
+A heart which is filled a little corresponds to a value between XXXX % and XXXXX %
+![image](https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/49ed1313-f028-4cf9-83a8-824a5104a355)
+
+![image](https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/b0999573-0757-4726-b2e0-ac9409e5784f)
+
+
+
 ## 
