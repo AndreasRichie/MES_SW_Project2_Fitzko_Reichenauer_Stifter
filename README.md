@@ -24,15 +24,16 @@ This core handles UART communication
 ### Display values
 
 How much or how little the heart is filled informes the user about the approximate SpO2 value.
-A not filled heart means a value below XXXXXX % and looks like this:
+A not filled heart corresponds to a value below 94% SpO2 and looks like this: <img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/879bb90f-7c17-49a4-8eb6-ed8257706553" width="96" align="center">
 
-<img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/879bb90f-7c17-49a4-8eb6-ed8257706553" width="48">
+A value between 94% and 96% SpO2 looks like this: <img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/49ed1313-f028-4cf9-83a8-824a5104a355" width="96" align="center">
 
-A heart which is filled a little corresponds to a value between XXXX % and XXXXX %
-![image](https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/49ed1313-f028-4cf9-83a8-824a5104a355)
+A value between 96% and 98% SpO2 looks like this: <img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/26c26fc7-f36d-419a-91b3-079ff65a2d64" width="96" align="center">
 
-![image](https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/b0999573-0757-4726-b2e0-ac9409e5784f)
+Finally, above 98% SpO2 looks like this <img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/b0999573-0757-4726-b2e0-ac9409e5784f" width="96" align="center">
 
+The speed at which the heart beats corresponds directly to the hearts BPM. Via a medical function the diastolic and systolic values get calculated and via the duration of the "smaller" heart and the "bigger" heart visuallized.
+For the actual values please use the UART communication. 
 
 
 ## 
