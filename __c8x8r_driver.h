@@ -2,7 +2,7 @@
  * __c8x8r_driver.h
  *
  *  Created on: 08.01.2024
- *      Author: dieter wieland
+ *      Author: dieter stifter
  */
 
 #ifndef C8X8R_DRIVER_H_
