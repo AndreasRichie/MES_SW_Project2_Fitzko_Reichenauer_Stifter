@@ -28,19 +28,28 @@
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
 #include "hr_and_spo2_handler.h"
-
-#include <Bsp.h>                      //Board support functions (for the waitTime function)
+#include "sensor_timer.h"
 
 extern IfxCpu_syncEvent g_cpuSyncEvent;
 
+void handle_error(const interface_return_value_t error){
+    if(error != SENSOR_ERROR)
+        return;
+    stop_read_timer();
+    start_error_timer();
+}
+
+void handle_read(void){
+    handle_error(read_and_calculate_values());
+}
+
+void handle_restart(void){
+    stop_error_timer();
+    start_read_timer();
+}
+
 int core1_main(void)
 {
-    // oximeter 5 click context object
-    oximeter5_t oximeter5;
-    // buffers for IR and red brightness values
-    uint32 ir_buffer[BUFFER_SIZE];
-    uint32 red_buffer[BUFFER_SIZE];
-
     IfxCpu_enableInterrupts();
     
     /* !!WATCHDOG1 IS DISABLED HERE!!
@@ -52,18 +61,23 @@ int core1_main(void)
     IfxCpu_emitEvent(&g_cpuSyncEvent);
     IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
 
-    interface_return_value_t oximeter_error = prepare_oximeter5_hardware(&oximeter5, ir_buffer, red_buffer);
+    // prepare oximeter 5 hardware for usage
+    interface_return_value_t oximeter_error = prepare_oximeter5_hardware();
 
-    // todo handle timing of read
-    // todo handle error and restart after time
+    // critical error if hardware can not be prepared, do not continue further
+    if(oximeter_error == SENSOR_ERROR)
+        return -1;
+
+    // initialize read and error timers
+    init_error_timer((interrupt_fptr_t)handle_restart);
+    init_read_timer((interrupt_fptr_t)handle_read);
+    // start value reading
+    start_read_timer();
+
     // todo better accuracy --> maybe low pass filter?
     // todo maybe error string for UART
     while(1)
     {
-        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 100));
-
-        oximeter_error = read_and_calculate_values(&oximeter5, ir_buffer, red_buffer);
-
     }
     return (1);
 }

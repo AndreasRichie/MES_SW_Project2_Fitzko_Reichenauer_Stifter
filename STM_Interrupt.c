@@ -93,10 +93,6 @@ void isrSTM(void)
 
 
     if(oximeter_error == SUCCESS){
-        // just to have all values available in debugger
-        uint8 test_spo2 = spo2_value;
-        sint32 test_hr = heart_rate_value;
-
         generate_timestamp();
         send_values(heart_rate_value, spo2_value);
     }

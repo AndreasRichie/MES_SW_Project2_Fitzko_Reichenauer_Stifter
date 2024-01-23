@@ -11,7 +11,7 @@ C_SRCS += \
 ../UART.c \
 ../hr_and_spo2_handler.c \
 ../oximeter5_click.c \
-../timer.c 
+../sensor_timer.c 
 
 OBJS += \
 ./Cpu0_Main.o \
@@ -21,7 +21,7 @@ OBJS += \
 ./UART.o \
 ./hr_and_spo2_handler.o \
 ./oximeter5_click.o \
-./timer.o 
+./sensor_timer.o 
 
 COMPILED_SRCS += \
 ./Cpu0_Main.src \
@@ -31,7 +31,7 @@ COMPILED_SRCS += \
 ./UART.src \
 ./hr_and_spo2_handler.src \
 ./oximeter5_click.src \
-./timer.src 
+./sensor_timer.src 
 
 C_DEPS += \
 ./Cpu0_Main.d \
@@ -41,14 +41,14 @@ C_DEPS += \
 ./UART.d \
 ./hr_and_spo2_handler.d \
 ./oximeter5_click.d \
-./timer.d 
+./sensor_timer.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
 %.src: ../%.c subdir.mk
 	@echo 'Building file: $<'
 	@echo 'Invoking: TASKING C/C++ Compiler'
-	cctc -D__CPU__=tc27xd "-fC:/Users/loltr/OneDrive/Documents/FH Technikum Wien/Embedded Systems/MES I/Software/ES_SW_Projekt/MES_SW_Project2_Fitzko_Reichenauer_Stifter/Debug/TASKING_C_C___Compiler-Include_paths.opt" --iso=99 --c++14 --language=+volatile --exceptions --anachronisms --fp-model=3 -O0 --tradeoff=4 --compact-max-size=200 -g -Wc-w544 -Wc-w557 -Ctc27xd -o "$@"  "$<"  -cs --dep-file="$(@:.src=.d)" --misrac-version=2012 -N0 -Z0 -Y0 2>&1;
+	cctc -D__CPU__=tc27xd "-fF:/Dokumente/FH/ES Software/Multicore/workspace/MES_SW_Project2_Fitzko_Reichenauer_Stifter/Debug/TASKING_C_C___Compiler-Include_paths.opt" --iso=99 --c++14 --language=+volatile --exceptions --anachronisms --fp-model=3 -O0 --tradeoff=4 --compact-max-size=200 -g -Wc-w544 -Wc-w557 -Ctc27xd -o "$@"  "$<"  -cs --dep-file="$(@:.src=.d)" --misrac-version=2012 -N0 -Z0 -Y0 2>&1;
 	@echo 'Finished building: $<'
 	@echo ' '
 

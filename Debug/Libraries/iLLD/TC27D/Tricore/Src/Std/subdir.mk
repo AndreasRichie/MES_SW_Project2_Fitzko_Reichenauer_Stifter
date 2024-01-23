@@ -20,7 +20,7 @@ C_DEPS += \
 Libraries/iLLD/TC27D/Tricore/Src/Std/%.src: ../Libraries/iLLD/TC27D/Tricore/Src/Std/%.c Libraries/iLLD/TC27D/Tricore/Src/Std/subdir.mk
 	@echo 'Building file: $<'
 	@echo 'Invoking: TASKING C/C++ Compiler'
-	cctc -D__CPU__=tc27xd "-fC:/Users/loltr/OneDrive/Documents/FH Technikum Wien/Embedded Systems/MES I/Software/ES_SW_Projekt/MES_SW_Project2_Fitzko_Reichenauer_Stifter/Debug/TASKING_C_C___Compiler-Include_paths.opt" --iso=99 --c++14 --language=+volatile --exceptions --anachronisms --fp-model=3 -O0 --tradeoff=4 --compact-max-size=200 -g -Wc-w544 -Wc-w557 -Ctc27xd -o "$@"  "$<"  -cs --dep-file="$(@:.src=.d)" --misrac-version=2012 -N0 -Z0 -Y0 2>&1;
+	cctc -D__CPU__=tc27xd "-fF:/Dokumente/FH/ES Software/Multicore/workspace/MES_SW_Project2_Fitzko_Reichenauer_Stifter/Debug/TASKING_C_C___Compiler-Include_paths.opt" --iso=99 --c++14 --language=+volatile --exceptions --anachronisms --fp-model=3 -O0 --tradeoff=4 --compact-max-size=200 -g -Wc-w544 -Wc-w557 -Ctc27xd -o "$@"  "$<"  -cs --dep-file="$(@:.src=.d)" --misrac-version=2012 -N0 -Z0 -Y0 2>&1;
 	@echo 'Finished building: $<'
 	@echo ' '
 
