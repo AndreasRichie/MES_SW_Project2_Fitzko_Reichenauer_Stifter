@@ -4,9 +4,19 @@
 
 This project uses the Oximeter 5 Click [https://www.mikroe.com/oximeter-5-click] and the 8x8 R-Click [https://www.mikroe.com/8x8-r-click] to messure, calculate and display the heartrate and SpO2 values of the user.
 Running the project on an Aurix Tricore Microprocessor utilizes all 3 cores of the system. 
-Additionally, you can view the values in more detail via UART.
+Additionally, you can view the values in more detail via UART.<br>
+<img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/c7414ffd-eb68-48a9-a421-90e697d788b6" width="300">
+<br>
+Overview of the setup.
+
+<img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/01c5d756-a73a-4ca3-aa14-d299d088ce9d" width="300"><br>
+After a finger is placed on the sensor, it starts messuring the heartrate and SpO2. 
+
+<img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/c872af60-918d-40cf-a90a-f887ead0ba17" width="300"><br>
+If the MC is connected to a PC with hterm the values can be viewed in more detail
 
 ## Core Setup
+<img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/65164936-17fd-4c8e-a28d-55fe8c933e48" align="center">
 
 ### CPU0
 This core handles the communication with LED-Matrix display via SPI
@@ -19,9 +29,26 @@ This core handles UART communication
 
 ## What happens at runtime
 
+After all the cores initialized CPU1 gathers data from the sensor and saves them in a global variable. 
+When CPU0 and CPU2 are ready they make a check if they can "grab" the sensor data. 
+If successful CPU0 uses the data to vizualise it on the 8x8 LED Matrix. 
+The faster the heartbeat the faster the heart on the 8x8 beats. In the middle of the heart is space to visualize the SpO2 value. A completly filled heart means SpO2 above 98%. More info about the filling under Display Values.
+
+CPU2 has an timer interrup every second. In this ISR it checks the global sensor variables as well and if successfull generates a timestamp of the passed time and then sends the time stamp and the data via UART to the user. 
+This happens periodically.
+
 ## All functions
 
+### The Sensor
+
+<img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/aab4536a-0ca0-4613-aac4-9ed3ea96cd45" align="center">
+
+The sensor work by messuring the (IR) red. After init it reads the current light levels and saves them to a buffer. After a few of these readings it starts calculating the BPM and SpO2 with bio magic. The calculated values then get saved into a global variable so that the other cores can read them too. Meanwhile, it continues reading lightlevels and overwrites old values. 
+This means the sensor is continuously reading and calculating. 
+In case of Errors it just retries until it works again. 
+
 ### Display values
+<img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/8f1ff79a-3c46-4f2a-ad1b-2f4766c8f4dd" align="center">
 
 How much or how little the heart is filled informes the user about the approximate SpO2 value.
 A not filled heart corresponds to a value below 94% SpO2 and looks like this: <img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/879bb90f-7c17-49a4-8eb6-ed8257706553" width="96" align="center">
@@ -35,5 +62,10 @@ Finally, above 98% SpO2 looks like this <img src="https://github.com/AndreasRich
 The speed at which the heart beats corresponds directly to the hearts BPM. Via a medical function the diastolic and systolic values get calculated and via the duration of the "smaller" heart and the "bigger" heart visuallized.
 For the actual values please use the UART communication. 
 
+### UART 
 
-## 
+<img src="https://github.com/AndreasRichie/MES_SW_Project2_Fitzko_Reichenauer_Stifter/assets/90688800/66ae1569-75d9-4d3b-b191-162c15c71b14" align="center">
+
+When connected to hterm the sensor values get posted every second via UART in this format: 
+[xxh:xxm:xxs] xxBPM, xx%SpO2,
+
