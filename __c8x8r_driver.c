@@ -2,9 +2,9 @@
  * __c8x8r_driver.c
  *
  *  Created on: 08.01.2024
- *      Author: dieter wieland
+ *      Author: dieter stifter
  */
-#include <Port/Io/IfxPort_Io.h>
+#include <Port/Io/IfxPo2rt_Io.h>
 #include <IfxPort_PinMap.h>
 #include "IfxQspi_SpiMaster.h"
 #include <Bsp.h>
@@ -202,12 +202,13 @@ static uint8 _speedScroll = 3;
 void get_globals(struct display_data *data){
 
 
-    sint32 bpm = 100;
-    uint8 spo2 = 100;
-    // Hier werde ich irgendwo die Global variablen abfrage
+    sint32 bpm = 0;
+    uint8 spo2 = 90;
 
     interface_return_value_t oximeter_error = get_values(&spo2, &bpm);
 
+
+    // Check for input parameters
     if(bpm < 35|| bpm > 150){
         data->bpm = 0;
     }else{

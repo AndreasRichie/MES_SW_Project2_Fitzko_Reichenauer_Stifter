@@ -55,20 +55,20 @@ int core0_main(void) {
     c8x8r_init();                                           // Initialize the display
 
     while(1) {
-        if(counter > 5)
-        {
-            get_globals(&data);
-            timings = c8x8r_getHeartFrequenz(data.bpm);
-            change_images(&data, image_big, image_small);
+        if(counter > 5){
+            get_globals(&data);                             // Get the data from memory location
+            timings = c8x8r_getHeartFrequenz(data.bpm);     // Calculate Timings
+            change_images(&data, image_big, image_small);   // Change image according to SPO2 and BPM
             counter = 0;
         }
-        c8x8r_displayRefresh();
-        c8x8r_displayImage(image_big);
-        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, (uint16)(timings >> 16)));
+
+        c8x8r_displayRefresh();                                                                     // Refreshes display before new image creation
+        c8x8r_displayImage(image_big);                                                              // Display big image
+        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, (uint16)(timings >> 16)));      // Wait time according to systolic timing
 
         c8x8r_displayRefresh();
-        c8x8r_displayImage(image_small);
-        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, (uint16)timings));
+        c8x8r_displayImage(image_small);                                                            // Displays the small image
+        waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, (uint16)timings));              // Wait time according to diastolic timing
 
         counter ++;
     }
