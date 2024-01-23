@@ -38,9 +38,7 @@ typedef enum
  * @details This function initializes all necessary pins and peripherals used
  * for this click board, resets the sensor, sets all operation modes and does
  * an initial reading.
- * @param[in] oximeter5 : Oximeter 5 Click context object.
- * @param[in] ir_buffer : Array to store the read IR brightness values in.
- * @param[in] red_buffer : Array to store the read red brightness values in.
+ * @params: None.
  * @return @li @c  0 - Success,
  *         @li @c -1 - Error Oximeter 5,
  *         @li @c -2 - Error calculating values,
@@ -49,16 +47,14 @@ typedef enum
  * See #interface_return_value_t definition for detailed explanation.
  * @note None.
  */
-interface_return_value_t prepare_oximeter5_hardware(oximeter5_t *oximeter5, uint32 *ir_buffer, uint32 *red_buffer);
+interface_return_value_t prepare_oximeter5_hardware(void);
 
 /**
  * @brief Oximeter 5 reading and saving function.
  * @details This function reads the brightness values from the Oximeter 5 and
  * calculates spo2 and heart rate values based on read samples. The calculated
  * values are stored to the shared memory.
- * @param[in] oximeter5 : Oximeter 5 Click context object.
- * @param[in] ir_buffer : Array to store the read IR brightness values in.
- * @param[in] red_buffer : Array to store the read red brightness values in.
+ * @params: None.
  * @return @li @c  0 - Success,
  *         @li @c -1 - Error Oximeter 5,
  *         @li @c -2 - Error calculating values,
@@ -67,7 +63,7 @@ interface_return_value_t prepare_oximeter5_hardware(oximeter5_t *oximeter5, uint
  * See #interface_return_value_t definition for detailed explanation.
  * @note None.
  */
-interface_return_value_t read_and_calculate_values(oximeter5_t *oximeter5, uint32 *ir_buffer, uint32 *red_buffer);
+interface_return_value_t read_and_calculate_values(void);
 
 /**
  * @brief Oximeter 5 get values function.

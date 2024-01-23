@@ -14,10 +14,15 @@
 
 #include <Bsp.h>                      //Board support functions (for the waitTime function)
 
+// oximeter 5 click context object
+static oximeter5_t oximeter5;
+// buffers for IR and red brightness values
+static uint32 ir_buffer[BUFFER_SIZE];
+static uint32 red_buffer[BUFFER_SIZE];
 
 // global values for shared memory/multicore communication
-static uint8 spo2_value;
-static sint32 heart_rate_value;
+static uint8 spo2_value = 0;
+static sint32 heart_rate_value = 0;
 static IfxCpu_mutexLock resource_lock;
 
 /**
@@ -28,20 +33,20 @@ static void delay_100ms ( void ){
     waitTime(IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, 100));
 }
 
-interface_return_value_t prepare_oximeter5_hardware(oximeter5_t *oximeter5, uint32 *ir_buffer, uint32 *red_buffer){
+interface_return_value_t prepare_oximeter5_hardware(void){
     // initialize I2C and Oximeter 5 and wait 100ms after
-    oximeter5_init(oximeter5);
+    oximeter5_init(&oximeter5);
     delay_100ms();
 
     // set default configuration to Oximeter 5 and wait 100ms after
-    if(oximeter5_default_cfg(oximeter5) == OXIMETER5_ERROR)
+    if(oximeter5_default_cfg(&oximeter5) == OXIMETER5_ERROR)
         return SENSOR_ERROR;
     delay_100ms();
 
     // read values if hardware interrupt occurs and fill up buffers
     for(uint8 n_cnt = 0; n_cnt < BUFFER_SIZE; n_cnt++){
-        while(oximeter5_check_interrupt(oximeter5) == OXIMETER5_INTERRUPT_ACTIVE);
-        if(oximeter5_read_sensor_data(oximeter5, &red_buffer[n_cnt], &ir_buffer[n_cnt]) == OXIMETER5_ERROR)
+        while(oximeter5_check_interrupt(&oximeter5) == OXIMETER5_INTERRUPT_ACTIVE);
+        if(oximeter5_read_sensor_data(&oximeter5, &red_buffer[n_cnt], &ir_buffer[n_cnt]) == OXIMETER5_ERROR)
             return SENSOR_ERROR;
     }
 
@@ -55,7 +60,7 @@ interface_return_value_t prepare_oximeter5_hardware(oximeter5_t *oximeter5, uint
 }
 
 
-interface_return_value_t read_and_calculate_values(oximeter5_t *oximeter5, uint32 *ir_buffer, uint32 *red_buffer){
+interface_return_value_t read_and_calculate_values(void){
     // shift values in buffers forwards by one sampling interval so end can be filled with next measurement
     for(uint8 n_cnt = SAMPLING_FREQUENCY; n_cnt < BUFFER_SIZE; n_cnt++){
         red_buffer[n_cnt - SAMPLING_FREQUENCY] = red_buffer[n_cnt];
@@ -64,8 +69,8 @@ interface_return_value_t read_and_calculate_values(oximeter5_t *oximeter5, uint3
 
     // fill up end of buffers with next measurements when hardware interrupt occurs
     for(uint8 n_cnt = (BUFFER_SIZE - SAMPLING_FREQUENCY); n_cnt < BUFFER_SIZE; n_cnt++){
-        while(oximeter5_check_interrupt(oximeter5) == OXIMETER5_INTERRUPT_ACTIVE);
-        if(oximeter5_read_sensor_data(oximeter5, &red_buffer[n_cnt], &ir_buffer[n_cnt]) == OXIMETER5_ERROR)
+        while(oximeter5_check_interrupt(&oximeter5) == OXIMETER5_INTERRUPT_ACTIVE);
+        if(oximeter5_read_sensor_data(&oximeter5, &red_buffer[n_cnt], &ir_buffer[n_cnt]) == OXIMETER5_ERROR)
             return SENSOR_ERROR;
     }
 
