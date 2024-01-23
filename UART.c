@@ -3,7 +3,7 @@
  *
  *  Created on: 2 Nov 2022
  *  Author: Technikum Wien
- *  Modified: Andreas Reichenauer
+ *  Modified: Andreas Reichenauer and Gabriel Fitzko
  *
  *  A working UART implementation with custom wrapper functions of the Asclin UART functions
  *  If more functionality is needed, make wrapper functions of the original UART functions.
@@ -104,26 +104,39 @@ void initUART() {
 
 }
 
-
-//Add custom functions for UART communication here
+//Sends one byte via UART
 void uart_blockingWrite(uint8 byte) {
     IfxAsclin_Asc_blockingWrite(&asc, byte);
 }
 
 
+//Sends a string (message) via UART
 void uart_sendMessage(uint8 *data, Ifx_SizeT size) {
     IfxAsclin_Asc_write(&asc, data, &size, TIME_INFINITE);
 }
 
+/*
+ * This function receives two values:
+ * hr (Heartrate) and SpO2 (blood oxygen saturation)
+ * It converts these two values with the string.h function "snprintf" into a string and
+ * then sends it via UART
+ */
 
 void send_values(const uint8 hr, const sint32 spo2){
-
 
     snprintf(value_string, sizeof(value_string), "%dBPM, %d%%SpO2,\n", hr, spo2);
     // Send converted string via UART
     uart_sendMessage((uint8*)value_string, strlen(value_string));
 }
 
+/*
+ * This function receives three values:
+ * secs (seconds), mins (minutes) and hours (hours)
+ * These values are the passed time and they get calculated in STM_Interrupt.c
+ * It converts these two values with the string.h function "snprintf" into a string and
+ * then sends it via UART
+ *
+ */
 void send_timestamp (const uint8 secs, const uint8 mins, const uint8 hours){
 
     snprintf(timestamp_buf, sizeof(timestamp_buf), "[%02dh:%02dm:%02ds] ", hours, mins, secs);

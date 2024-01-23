@@ -23,15 +23,18 @@
  * COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN 
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
+ *
+ *
+ * Modifications by Gabriel Fitzko
+ *
+ * CPU2 runs UART and the the timer used in STM_Interrupt.c
+ *
  *********************************************************************************************************************/
 #include "Ifx_Types.h"
 #include "IfxCpu.h"
 #include "IfxScuWdt.h"
 #include "STM_Interrupt.h"
 #include <UART.h>
-
-
-
 
 extern IfxCpu_syncEvent g_cpuSyncEvent;
 
@@ -48,12 +51,16 @@ int core2_main(void)
     IfxCpu_emitEvent(&g_cpuSyncEvent);
     IfxCpu_waitEvent(&g_cpuSyncEvent, 1);
 
+
+    //init UART to start communicating
     initUART();
+
+    //init the Timer for the regular UART communication
     initCommTimer();
 
     while(1)
     {
-
+        //watch life pass you bye.
     }
     return (1);
 }

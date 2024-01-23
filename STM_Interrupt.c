@@ -23,6 +23,11 @@
  * COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
+ *
+ *
+ * Modifications by Gabriel Fitzko
+ * This file reacts to the timer overflow and then sends the HR and SpO2 Values via UART to the PC
+ *
  *********************************************************************************************************************/
 
 /*********************************************************************************************************************/
@@ -53,6 +58,7 @@ IfxStm_CompareConfig g_STMConf;                                 /* STM configura
 Ifx_TickTime g_ticksFor1s;                                   /* Variable to store the number of ticks to wait    */
 boolean timer_flag = FALSE;
 
+//Keeps track of the time since start
 uint8    seconds = 0;
 uint8    minutes = 0;
 uint8    hours = 0;
@@ -78,7 +84,7 @@ void initSTM(void);
  *  - vectabNum: Vector table number.
  *  - priority: Interrupt priority. Refer Usage of Interrupt Macro for more details.
  */
-IFX_INTERRUPT(isrSTM, 0, ISR_PRIORITY_STM);
+IFX_INTERRUPT(isrSTM, 2, ISR_PRIORITY_STM);
 
 void isrSTM(void)
 {
@@ -89,19 +95,19 @@ void isrSTM(void)
     /* Update the compare register value that will trigger the next interrupt and toggle the LED */
     IfxStm_increaseCompare(STM, g_STMConf.comparator, g_ticksFor1s);
 
-    interface_return_value_t oximeter_error = get_values(&spo2_value, &heart_rate_value);
 
+    /*
+     * This line checks if the values from the sensor are available and then tries to get them.
+     * If it is successfull (== SUCCESS) it generates the timestamp and sends the values via UART
+     */
+
+    interface_return_value_t oximeter_error = get_values(&spo2_value, &heart_rate_value);
 
     if(oximeter_error == SUCCESS){
         generate_timestamp();
 
         send_values(heart_rate_value, spo2_value);
     }
-
-
-
-
-
 }
 
 /* Function to initialize the STM */
@@ -110,7 +116,7 @@ void initSTM(void)
     IfxStm_initCompareConfig(&g_STMConf);           /* Initialize the configuration structure with default values   */
 
     g_STMConf.triggerPriority = ISR_PRIORITY_STM;   /* Set the priority of the interrupt                            */
-    g_STMConf.typeOfService = IfxSrc_Tos_cpu0;      /* Set the service provider for the interrupts                  */
+    g_STMConf.typeOfService = IfxSrc_Tos_cpu2;      /* Set the service provider for the interrupts                  */
     g_STMConf.ticks = g_ticksFor1s;                 /* Set the number of ticks after which the timer triggers an
                                                      * interrupt for the first time                                 */
     IfxStm_initCompare(STM, &g_STMConf);            /* Initialize the STM with the user configuration               */
@@ -121,12 +127,17 @@ void initCommTimer(void)
 {
     /* Initialize time constant */
     g_ticksFor1s = IfxStm_getTicksFromMilliseconds(BSP_DEFAULT_TIMER, TIMER_INT_TIME);
-
     initSTM();                                      /* Configure the STM module                                     */
 }
 
 
 
+/*
+ * This function generates the timestamp in this format
+ * [xxh:xxm:xxs]
+ * and then sends it via UART
+ *
+ */
 
 static void generate_timestamp(void){
 

@@ -4,7 +4,7 @@
  *  Created on: 08.01.2024
  *      Author: dieter stifter
  */
-#include <Port/Io/IfxPo2rt_Io.h>
+#include <IfxPort_Io.h>
 #include <IfxPort_PinMap.h>
 #include "IfxQspi_SpiMaster.h"
 #include <Bsp.h>
@@ -200,7 +200,6 @@ static uint8 _speedScroll = 3;
 
 
 void get_globals(struct display_data *data){
-
 
     sint32 bpm = 0;
     uint8 spo2 = 90;
