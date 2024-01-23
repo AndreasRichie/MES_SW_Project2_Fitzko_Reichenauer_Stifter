@@ -33,17 +33,21 @@
 extern IfxCpu_syncEvent g_cpuSyncEvent;
 
 void handle_error(const interface_return_value_t error){
+    // if calculation error or save error occurred still continue with next reading
     if(error != SENSOR_ERROR)
         return;
+    // stop reading and start delay
     stop_read_timer();
     start_error_timer();
 }
 
 void handle_read(void){
+    // check return value of calculation
     handle_error(read_and_calculate_values());
 }
 
 void handle_restart(void){
+    // stop delay timer and restart read timer
     stop_error_timer();
     start_read_timer();
 }
@@ -74,8 +78,6 @@ int core1_main(void)
     // start value reading
     start_read_timer();
 
-    // todo better accuracy --> maybe low pass filter?
-    // todo maybe error string for UART
     while(1)
     {
     }
