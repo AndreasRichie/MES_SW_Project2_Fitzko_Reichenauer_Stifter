@@ -27,7 +27,7 @@
     <stringAttribute key="debugger_configuration.gdi.resource.Frequency" value="5000000"/>
     <stringAttribute key="debugger_configuration.gdi.resource.TerminateServer" value="1"/>
     <stringAttribute key="debugger_configuration.gdi.resource.gdi2mcd.reset.class_vector" value="0x4"/>
-    <stringAttribute key="debugger_configuration.gdi.resource.user.ConnectedServerName" value="DAS JTAG SHIELDBUDDY TC275 464E5HF9"/>
+    <stringAttribute key="debugger_configuration.gdi.resource.user.ConnectedServerName" value="DAS JTAG SHIELDBUDDY TC275 463DRH3E"/>
     <stringAttribute key="debugger_configuration.goto_label" value="core0_main"/>
     <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_ID" value="dwn"/>
     <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="run"/>
